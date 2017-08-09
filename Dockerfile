@@ -82,3 +82,5 @@ RUN chmod o+wx /var/lib/php/sessions/
 
 WORKDIR /var/www/html/
 USER ducky
+RUN echo 'alias sf="php app/console"' >> ~/.bashrc
+RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
