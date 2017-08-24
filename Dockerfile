@@ -1,5 +1,5 @@
 # See https://github.com/docker-library/php/blob/4677ca134fe48d20c820a19becb99198824d78e3/7.0/fpm/Dockerfile
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
 
 MAINTAINER Keaton Burleson <keaton.burleson@me.com>
@@ -20,6 +20,7 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Arguments
 ############################################################
 ENV TZ "America/Chicago"
+ENV MEMORY_LIMIT "512M"
 
 ############################################################
 # Update Timezone
@@ -73,6 +74,10 @@ RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xd
 RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "session.gc_maxlifetime = 3600" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "max_execution_time = 0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "memory_limit = $MEMORY_LIMIT"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "date.timezone = $TZ" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
 RUN echo 'alias sf="php app/console"' >> ~/.bashrc
